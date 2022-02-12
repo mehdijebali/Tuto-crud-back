@@ -4,7 +4,7 @@ WORKDIR /opt/project
 
 # ---- Dependencies ----
 COPY src ./src
-Copy pom.xml .
+COPY pom.xml .
 
 # ---- Build ----
 RUN mvn clean
