@@ -8,4 +8,6 @@ COPY pom.xml .
 
 # ---- Build ----
 RUN mvn clean
+
+EXPOSE 8080
 CMD ["mvn", "clean", "install"]
