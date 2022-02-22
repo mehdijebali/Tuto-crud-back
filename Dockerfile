@@ -5,6 +5,9 @@ WORKDIR /opt/project
 # ---- Dependencies ----
 COPY src ./src
 COPY pom.xml .
+COPY mvnw .
+COPY mvnw.cmd .
+COPY target ./target
 
 # ---- Build ----
 RUN mvn clean install
