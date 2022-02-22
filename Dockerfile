@@ -10,7 +10,6 @@ COPY mvnw.cmd .
 COPY target ./target
 
 # ---- Build ----
-RUN mvn clean install
 
 EXPOSE 8080
 CMD ["mvn", "clean", "install"]
