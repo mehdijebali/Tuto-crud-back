@@ -7,7 +7,7 @@ COPY src ./src
 COPY pom.xml .
 
 # ---- Build ----
-RUN mvn clean
+RUN mvn clean install
 
 EXPOSE 8080
 CMD ["mvn", "clean", "install"]
