@@ -2,16 +2,15 @@ FROM maven:3-openjdk-8
 
 WORKDIR /opt/project
 
-# ---- Dependencies ----
+# ---- Build stage ----
 COPY src ./src
 COPY pom.xml .
 COPY mvnw .
 COPY mvnw.cmd .
+
+# ---- Run stage ----
+FROM openjdk:8-oracle
 COPY target ./target
-
-# ---- Build ----
-#RUN mvn package
-
 EXPOSE 8080
 
-CMD ["mvn", "clean","package","java","-jar","**/*.jar"]
+CMD ["mvn","package","java","-jar","./target/*.jar"]
