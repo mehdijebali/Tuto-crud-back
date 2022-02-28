@@ -1,16 +1,14 @@
-FROM maven:3-openjdk-8
+# ---- Build Stage ----
+FROM maven:3-openjdk-8 AS build
+RUN mkdir -p /workspace
+WORKDIR /workspace
+COPY pom.xml /workspace
+COPY .env /workspace
+COPY src /workspace/src
+RUN mvn -f pom.xml clean package
 
-WORKDIR /opt/project
-
-# ---- Build stage ----
-COPY src ./src
-COPY pom.xml .
-COPY mvnw .
-COPY mvnw.cmd .
-
-# ---- Run stage ----
-FROM openjdk:8-oracle
-COPY target ./target
+# ---- Deploy stage ----
+FROM openjdk:8-alpine
+COPY --from=build /workspace/target/*.jar app.jar
 EXPOSE 8080
-
-CMD ["mvn","package","java","-jar","./target/*.jar"]
+ENTRYPOINT ["java","-jar","app.jar"]
