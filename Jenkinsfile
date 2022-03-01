@@ -1,5 +1,6 @@
 pipeline {
       agent any
+      tools {maven "LocalMaven"}
       stages {
             stage('Initialization') {
                   steps {
@@ -9,6 +10,7 @@ pipeline {
             stage('Build Jar File') {
                   steps {
                         echo '**** Build jar file ****'
+                        sh 'mvn clean package'
                   }
             }
             stage('Build Docker Image') {
