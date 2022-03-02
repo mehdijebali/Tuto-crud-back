@@ -1,5 +1,9 @@
 pipeline {
       agent any
+      environment {
+          registry = "mehdijebali/crud-back"
+          dockerImage = ''
+    }
       tools {maven "LocalMaven"}      
             
       stages {
@@ -16,9 +20,11 @@ pipeline {
             }
             stage('Build Docker Image') {
                   steps {
-                        echo '**** Build Docker Image ****'
-                        docker.build mehdijebali/crud-back:$BUILD_NUMBER
-                  }
+                      script {
+                        dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                        }
+                }
+                        
             }
       }
 }
