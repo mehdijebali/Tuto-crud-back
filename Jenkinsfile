@@ -18,13 +18,12 @@ pipeline {
                         sh 'mvn clean package'
                   }
             }
-            stage('Build Docker Image') {
-                  steps {
-                      script {
-                        sudo dockerImage = docker.build registry + ":$BUILD_NUMBER"
-                        }
-                }
-                        
-            }
+            // stage('Build Docker Image') {
+                  // steps {
+                  //     script {
+                  //    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                        // }
+            //     }
+            //}
       }
 }
