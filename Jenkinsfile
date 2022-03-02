@@ -16,7 +16,7 @@ pipeline {
             stage('Build Docker Image') {
                   steps {
                         echo '**** Build Docker Image ****'
-                        sh 'docker build -t mehdijebali/crud-back:1.4:${env.BUILD_ID}'
+                        sh 'docker build -t mehdijebali/crud-back:1.4:${env.BUILD_ID} .'
                   }
             }
       }
