@@ -21,8 +21,7 @@ pipeline {
                               sh "${tool("sonarqube")}/bin/sonar-scanner \
                               -Dsonar.projectKey=Backend \
                               -Dsonar.sources=./src/main/java/ \
-                              -Dsonar.language=java \
-                              -Dsonar.java.binaries=./target/classes/   
+                              -Dsonar.language=java \   
                               -Dsonar.host.url=http://localhost:9000"
                               }
                         }                  
