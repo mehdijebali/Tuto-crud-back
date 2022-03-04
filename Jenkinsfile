@@ -7,9 +7,23 @@ pipeline {
       tools {maven "LocalMaven"}      
             
       stages {
+            
             stage('Initialization') {
                   steps {
                         echo '**** Starting Pipeline Job ****'
+                  }
+            }
+            stage('Code Quality Check via SonarQube') {
+                  steps {
+                        script {
+                        def scannerHome = tool 'sonarqube';
+                              withSonarQubeEnv("sonarqube") {
+                              sh "${tool("sonarqube")}/bin/sonar-scanner \
+                              -Dsonar.projectKey=Backend \
+                              -Dsonar.sources=. \
+                              -Dsonar.host.url=http://localhost:9000"
+                              }
+                        }                  
                   }
             }
             stage('Build Jar File') {
