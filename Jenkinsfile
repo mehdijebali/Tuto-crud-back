@@ -22,7 +22,7 @@ pipeline {
                               -Dsonar.projectKey=Backend \
                               -Dsonar.sources=./src/main/java/ \
                               -Dsonar.language=java \
-                              -Dsonar.java.binaries=./target/classes \  
+                              -Dsonar.java.binaries=./target/classes/ \  
                               -Dsonar.host.url=http://localhost:9000"
                               }
                         }                  
