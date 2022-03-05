@@ -15,9 +15,18 @@ pipeline {
             }
             stage('Code Quality Check via SonarQube') {
                   steps {
-                        sh "mvn clean verify sonar:sonar"
-                  }                  
-            }
+                        script {
+                        def scannerHome = tool 'sonarqube';
+                              withSonarQubeEnv("sonarqube") {
+                              sh "${tool("sonarqube")}/bin/sonar-scanner \
+                              -Dsonar.projectKey=Backend \
+                              -Dsonar.sources=. \
+                              -Dsonar.host.url=http://localhost:9000"
+                              }
+                        }                  
+                  }
+                        // sh "mvn clean verify sonar:sonar"
+            }                  
             stage('Build Jar File') {
                   steps {
                         echo '**** Build jar file ****'
