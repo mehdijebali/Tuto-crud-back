@@ -16,8 +16,7 @@ pipeline {
             stage('Code Quality Check via SonarQube') {
                   steps {
                         sh "mvn clean verify sonar:sonar"
-                        }                  
-                  }
+                  }                  
             }
             stage('Build Jar File') {
                   steps {
@@ -25,6 +24,7 @@ pipeline {
                         sh 'mvn clean package'
                   }
             }
+      }
             // stage('Build Docker Image') {
                   // steps {
                   //     script {
@@ -32,5 +32,4 @@ pipeline {
                         // }
             //     }
             //}
-//      }
 }
