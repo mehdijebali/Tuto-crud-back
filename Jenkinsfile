@@ -1,9 +1,9 @@
 pipeline {
-      agent any
       environment {
-          registry = "mehdijebali/crud-back"
+          dockerimagename = "mehdijebali/crud-back"
           dockerImage = ""
       }
+      agent any
       tools {maven "LocalMaven"}      
             
       stages {
