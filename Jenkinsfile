@@ -2,7 +2,7 @@ pipeline {
       agent any
       environment {
           registry = "mehdijebali/crud-back"
-          dockerImage = ''
+          dockerImage = ""
     }
       tools {maven "LocalMaven"}      
             
@@ -26,7 +26,6 @@ pipeline {
                               }
                         }                  
                   }
-                        // sh "mvn clean verify sonar:sonar"
             }                  
             stage('Build Jar File') {
                   steps {
@@ -34,12 +33,24 @@ pipeline {
                         sh 'mvn clean package'
                   }
             }
+            stage('Release Docker Image') {
+                  environment {
+                        registryCredential = 'dockerhub'
+                  }
+                  steps {
+                        echo '**** Build Docker Image ****'
+                        script{
+                              dockerImage = docker.build dockerimagename
+                              docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) 
+                              {dockerImage.push("latest")}
+                        }
+                  }
+            stage('Deploy to k8s') {
+                  steps {
+                        echo '**** Deploy Application ****'
+                        withCredentials([ string(credentialsId: 'k8s', variable: 'api_token') ]) { sh 'kubectl --token $api_token --server https://192.168.49.2:8443/ --insecure-skip-tls-verify=true apply -f ./K8s '}
+                  }
+            }          
       }
-            // stage('Build Docker Image') {
-                  // steps {
-                  //     script {
-                  //    dockerImage = docker.build registry + ":$BUILD_NUMBER"
-                        // }
-            //     }
-            //}
+      
 }
