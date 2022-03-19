@@ -3,7 +3,7 @@ pipeline {
       environment {
           registry = "mehdijebali/crud-back"
           dockerImage = ""
-    }
+      }
       tools {maven "LocalMaven"}      
             
       stages {
@@ -45,6 +45,7 @@ pipeline {
                               {dockerImage.push("latest")}
                         }
                   }
+            }
             stage('Deploy to k8s') {
                   steps {
                         echo '**** Deploy Application ****'
