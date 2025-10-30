@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: database-np
+spec:
+  # Selects the Database Pods
+  podSelector:
+    matchLabels:
+      app: database-deployment
+  policyTypes:
+    - Ingress
+
+  # --- INGRESS RULES ---
+  ingress:
+    # 1. Allow traffic only from the Backend Pods on port 3306
+    - from:
+        - podSelector:
+            matchLabels:
+              app: back-deployment
+      ports:
+        - protocol: TCP
+          port: 3306
+          
