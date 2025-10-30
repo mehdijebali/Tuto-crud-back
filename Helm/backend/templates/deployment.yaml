@@ -41,7 +41,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: http
+            - name: http-back
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           {{- with .Values.livenessProbe }}
@@ -60,6 +60,12 @@ spec:
           volumeMounts:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          env:
+          - name: DATABASE_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: {{ include "backend.fullname" . }}
+                key: databasehost
       {{- with .Values.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}
