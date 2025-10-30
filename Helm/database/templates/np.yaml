@@ -1,12 +1,12 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: database-np
+  name: {{ include "database.fullname" . }}
 spec:
   # Selects the Database Pods
   podSelector:
     matchLabels:
-      app: database-deployment
+      {{- include "database.selectorLabels" . | nindent 6 }}
   policyTypes:
     - Ingress
 
@@ -16,7 +16,7 @@ spec:
     - from:
         - podSelector:
             matchLabels:
-              app: back-deployment
+              app.kubernetes.io/name: app-Backend
       ports:
         - protocol: TCP
           port: 3306

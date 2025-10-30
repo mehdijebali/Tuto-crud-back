@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: database-pv-claim 
+  name: {{ include "database.fullname" . }} 
   labels:
-    app: database-volume
+    {{- include "database.labels" . | nindent 4 }}
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   resources:
     requests:
       storage: 10Mi
