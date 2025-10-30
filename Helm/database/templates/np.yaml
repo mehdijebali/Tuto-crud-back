@@ -16,7 +16,7 @@ spec:
     - from:
         - podSelector:
             matchLabels:
-              app.kubernetes.io/name: app-Backend
+              app.kubernetes.io/name: app-backend
       ports:
         - protocol: TCP
           port: {{ .Values.service.port }}
