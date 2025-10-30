@@ -19,5 +19,5 @@ spec:
               app.kubernetes.io/name: app-Backend
       ports:
         - protocol: TCP
-          port: 3306
+          port: {{ .Values.service.port }}
           
