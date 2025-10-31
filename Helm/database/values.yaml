@@ -124,8 +124,32 @@ resources:
     memory: 500Mi
 
 # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
-livenessProbe: []
+livenessProbe:
+  exec:
+    command:
+    - /usr/bin/mysqladmin
+    - ping
+    - -h
+    - localhost
+    - -u
+    - root
+    - --password=$(MYSQL_ROOT_PASSWORD)
+  initialDelaySeconds: 60 
+  periodSeconds: 30
+  failureThreshold: 5
 readinessProbe: []
+#  exec:
+#    command:
+#    - /usr/bin/mysqladmin
+#    - ping
+#    - -h
+#    - localhost
+#    - -u
+#    - root
+#    - --password=$(MYSQL_ROOT_PASSWORD)
+#  initialDelaySeconds: 20 
+#  periodSeconds: 10
+#  failureThreshold: 3
 
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
 autoscaling:
